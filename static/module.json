@@ -1,0 +1,14 @@
+{
+  "name": "fvtt-dnd5e-tools",
+  "title": "Tools for the DnD5e character sheet",
+  "description": "Gives the ability to roll tool skill rolls.",
+  "version": "0.0.1",
+  "author": "cramt",
+  "systems": ["dnd5e"],
+  "esmodules": ["index.js"],
+  "styles": [],
+  "languages": [],
+  "url": "",
+  "manifest": "",
+  "download": ""
+}

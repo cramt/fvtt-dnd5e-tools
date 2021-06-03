@@ -1,0 +1,98 @@
+{{#if isTidy5e}}
+<div class='list-layout'>
+{{/if}}
+<ol class="items-list inventory-list">
+    {{#each data}}
+    {{#if ../isTidy5e}}
+    <li class="items-header">
+        <h3 class="item-name">{{ @key }}</h3>
+        <div class="items-header-labels">
+            <div class="item-tool-proficiency">Proficiency</div>
+            <div class="item-tool-ability">Ability</div>
+            <div class="item-tool-bonus">Bonus}</div>
+            <div class="item-tool-modifier">Modifier</div>
+        </div>
+        <div class="item-control inventory-plus-helper"></div>
+    </li>
+    {{else}}
+    <li class="items-header flexrow">
+        <h3 class="item-name flexrow">{{ @key }}</h3>
+        <div class="item-detail item-tool-proficiency">Proficiency</div>
+        <div class="item-detail item-tool-ability">Ability</div>
+        <div class="item-detail item-tool-bonus">Bonus</div>
+        <div class="item-detail item-tool-modifier">Modifier</div>
+    </li>
+    {{/if}}
+
+    <ol class="item-list">
+        {{#each this}}
+        <li class="item {{#unless ../../isTidy5e}}flexrow{{/unless}} tool-data {{#if (and ../../owner ../../isTidy5e)}}context-enabled{{/if}} {{#if tool.isFavorite}}isFav{{/if}} {{#if (gte tool.prof 1)}}equipped{{/if}}" data-item-id="{{tool.key}}" data-tool-id="{{tool.key}}">
+            <div class="item-name flexrow rollable">
+                <div class="item-image" style="background-image: url({{tool.img}})">{{#if ../../isTidy5e}}<i class="fa fa-dice-d20"></i>{{/if}}</div>
+                <h4>
+                    {{name}}
+                </h4>
+                
+            </div>
+            {{#if (and ../../isTidy5e tool.isFavorite)}}
+                <div class="item-state-icon" title="Favorite"><i class="fas fa-bookmark icon-fav"></i></div>
+            {{/if}}
+            <div class="item-detail item-tool-proficiency">
+                <select data-dtype="Number" name="flags.{{../../MODULE_NAME}}.tools.{{tool.key}}.prof">
+                    {{#select tool.prof }}
+                        {{#each ../../proficiencyLevels}}
+                        <option {{#ifEquals this ../prof}} selected {{/ifEquals}} value="{{this}}">{{@key}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+            <div class="item-detail item-tool-ability">
+                <select data-dtype="String" name="flags.{{../../MODULE_NAME}}.tools.{{tool.key}}.ability">
+                    {{#select tool.ability}}
+                        <option value="-">---</option>
+                        {{#each ../../abilities as |name a|}}
+                        <option value="{{a}}">{{name}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+            <div class="item-detail item-tool-bonus">
+                <input type="text" name="flags.{{../../MODULE_NAME}}.tools.{{tool.key}}.bonus" value="{{tool.bonus}}">
+            </div>
+
+            <div class="item-detail item-tool-modifier">
+                {{ numberFormat (math prof "*" ../../profMod) decimals=0 sign=true}}
+            </div>
+
+            {{#if ../../isTidy5e}}
+            <div class="info-card {{#if (gte tool.prof 1)}}equipped{{/if}}" data-item-id="{{tool.key}}">
+                <p class="info-card-name">{{tool.name}}</p>
+                <div class="description-wrap">
+                    <div class="info-card-description">
+                    <!-- item description -->
+                    </div>
+                </div>
+                    <article class="mod-roll-buttons"></article>
+                </div>
+            {{/if}}
+           
+            
+            {{#if (and ../../owner ../../isTidy5e) }}
+            <div class="activate-context-menu">
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+            <div class="item-controls context-menu">
+                <hr class="context-divider">
+            </div>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ol>
+
+    {{/each}}
+</ol>
+{{#if isTidy5e}}
+<div/>
+{{/if}}
